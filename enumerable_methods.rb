@@ -155,7 +155,9 @@ module Enumerable
     arr
   end
 
-  def my_inject(num = nil)
+  def my_inject(num = nil, sym = nil)
+    arr = self.to_a
+
     if block_given?
       if num != nil
         my_each do |el|
@@ -163,7 +165,6 @@ module Enumerable
         end
         num
       else
-        arr = self.to_a
         num = arr[0]
         arr[1..-1].my_each do |el|
           num = yield(num, el)
@@ -175,6 +176,12 @@ module Enumerable
         sum = nil
         my_each { |i| sum = sum.nil? ? i : sum.send(num, i) }
         sum
+      elsif !sym.nil?
+        if sym.class == Symbol || sym.class == String
+          sum = num
+          my_each { |i| sum = sum.send(sym, i) }
+          sum
+        end
       else
         "#{num} is not a symbol nor a string (TypeError)"
       end
@@ -244,15 +251,17 @@ proc1 = proc { |x| x ** 2 }
 p [1, 2, 3, 22, 5].my_map(&proc1)
 puts
 p "My_inject method:"
-p "Using argument:"
+p "Using only argument:"
 p [1, 2, 3, 2, 5].my_inject(5)
 p "Using block:"
 p "Using argument and block:"
 p([1, 2, 3, 2, 5].my_inject(5) { |sum, el| sum + el })
-p "Using String:"
+p "Using string:"
 p [1, 2, 3, 2, 5].my_inject("+")
-p "Using Symbol:"
+p "Using symbol:"
 p [1, 2, 3, 2, 5].my_inject(:-)
+p "Using argument and symbol:"
+p [1, 2, 3, 2, 5].my_inject(5,:-)
 puts
 p "Multiply_els method:"
 p [].multiply_els([2, 4, 5])
