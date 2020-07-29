@@ -121,17 +121,14 @@ module Enumerable
       return sum if num.nil?
 
       sum + num
-    elsif num.class == Symbol || num.class == String
-      sum = nil
-      my_each { |i| sum = sum.nil? ? i : sum.send(num, i) }
-      sum
-    else
-      my_each do |el|
-        sum += el
+    elsif !block_given?
+      if num.class == Symbol || num.class == String
+        sum = nil
+        my_each { |i| sum = sum.nil? ? i : sum.send(num, i) }
+        sum
+      else
+        "#{num} is not a symbol nor a string (TypeError)"
       end
-      return sum if num.nil?
-
-      sum + num
     end
   end
 
@@ -202,12 +199,16 @@ p 'Using argument:'
 p [1, 2, 3, 2, 5].my_inject(5)
 p 'Using block:'
 p([1, 2, 3, 2, 5].my_inject { |sum, el| sum + el })
+
 p 'Using argument and block:'
 p([1, 2, 3, 2, 5].my_inject(5) { |sum, el| sum + el })
+
 p 'Using String:'
 p [1, 2, 3, 2, 5].my_inject('+')
+
 p 'Using Symbol:'
 p [1, 2, 3, 2, 5].my_inject(:-)
+
 puts
 p 'Multiply_els method:'
 p [].multiply_els([2, 4, 5])
