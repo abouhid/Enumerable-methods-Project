@@ -25,13 +25,15 @@
 [Live Demo Link](https://repl.it/@abouhid/Enumerable-methods#main.rb)
 
 
+
 ### Prerequisites
 
 - Browser (Google Chrome, Mozilla Firefox, Safari or any other browser)
 
 ### Setup
-
-- Download or clone the repository's files
+- Open Terminal
+- Run git clone git@github.com:abouhid/Enumerable-methods-Project.git
+- Run ruby enumerable_methods.rb
 
 ## Author
 
