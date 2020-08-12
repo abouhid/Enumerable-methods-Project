@@ -8,7 +8,7 @@ module Enumerable
   end
 
   def my_each_with_index
-    return to_enum unless block_given?
+    return enum_for(__callee__) unless block_given?
       size.times { |i| yield(to_a[i], i) }
       self
   end
