@@ -14,7 +14,7 @@ describe Enumerable do
       expect(test.my_each.to_a).to eql(test.each.to_a)
     end
     it 'returns the elements of an array which presents a block' do
-      expect(test.my_each.to_a {|el| el+4}).to eql(test.each.to_a {|el| el+4})
+      expect(test.my_each.to_a { |el| el + 4 }).to eql(test.each.to_a { |el| el + 4 })
     end
     it 'returns the elements of a range' do
       expect(range.my_each.to_a).to eql(range.each.to_a)
@@ -25,7 +25,7 @@ describe Enumerable do
   end
   describe '#my_each_with_index' do
     it 'returns the elements of an array with index' do
-      expect(test.my_each_with_index.to_a{|el,i|}).to eql(test.each_with_index.to_a{|el,i|})
+      expect(test.my_each_with_index.to_a { |el, i| }).to eql(test.each_with_index.to_a { |el, i| })
     end
     it 'returns the elements of an array with index' do
       expect(range.my_each_with_index.to_a).to eql(range.each_with_index.to_a)
@@ -36,24 +36,39 @@ describe Enumerable do
   end
   describe '#my_select' do
     it 'returns the elements of an array that are selected if they pass a condition' do
-      expect(arr_i.select { |n| n > 3 }).to eql(arr_i.my_select { |n| n > 3 })
+      expect(arr_i.my_select { |n| n > 3 }).to eql(arr_i.select { |n| n > 3 })
+    end
+    it 'returns the elements of a range that are selected if they pass a condition' do
+      expect(range.my_select { |n| n > 3 }).to eql(range.select { |n| n > 3 })
+    end
+    it 'returns Enumerator if no block is given' do
+      expect(arr_i.my_select).to be_an Enumerator
     end
   end
 
   describe '#my_all?' do
-    it 'returns the elements of an array if all of them pass a condition' do
+    it 'returns the elements of an array if all of them pass a condition when a block is given' do
       expect(arr_s.my_all? { |word| word.length >= 2 }).to eql(arr_s.all? { |word| word.length >= 2 })
+    end
+    it 'returns the elements of an array if all of them pass a condition when no block is given' do
+      expect(arr_s.my_all?('ant')).to eql(arr_s.all?('ant'))
     end
   end
 
   describe '#my_any?' do
-    it 'returns the elements of an array if any of them pass a condition' do
+    it 'returns the elements of an array if any of them pass a condition when a block is given' do
       expect(arr_s.my_any? { |word| word.length >= 2 }).to eql(arr_s.any? { |word| word.length >= 2 })
+    end
+    it 'returns the elements of an array if any of them pass a condition when no block is given' do
+      expect(arr_s.my_any?('ant')).to eql(arr_s.any?('ant'))
     end
   end
   describe '#my_none?' do
-    it 'returns the elements of an array if none of them pass a condition' do
+    it 'returns the elements of an array if none of them pass a condition when a block is given' do
       expect(arr_s.my_none? { |word| word.length >= 2 }).to eql(arr_s.none? { |word| word.length >= 2 })
+    end
+    it 'returns the elements of an array if none of them pass a condition when no block is given' do
+      expect(arr_s.my_none?('ant')).to eql(arr_s.none?('ant'))
     end
   end
   describe '#my_count' do
@@ -69,13 +84,25 @@ describe Enumerable do
   end
 
   describe '#my_map' do
-    it 'returns the array with its elements modified' do
+    it 'returns the array with its elements modified when a block is given' do
       expect(arr_i.my_map { |x| x * 5 }).to eql(arr_i.map { |x| x * 5 })
+    end
+    it 'returns the range with its elements modified when a proc is given' do
+      expect(range.my_map(&proc_case)).to eql(range.map(&proc_case))
     end
   end
   describe '#my_inject' do
     it 'Combines all elements of array by applying a binary operation, specified by a block' do
       expect(arr_i.my_inject(5) { |sum, el| sum + el }).to eql(arr_i.inject(5) { |sum, el| sum + el })
+    end
+    it 'Combines all elements of array by applying a binary operation, using a string as a condition' do
+      expect(arr_i.my_inject('+')).to eql(arr_i.inject('+'))
+    end
+    it 'Combines all elements of array by applying a binary operation, using a symbol as a condition' do
+      expect(arr_i.my_inject(:-)).to eql(arr_i.inject(:-))
+    end
+    it 'Combines all elements o a range by applying a binary operation, using a symbol and an argument as conditions' do
+      expect(range.my_inject(5, :-)).to eql(range.inject(5, :-))
     end
   end
   describe '#multiply_els' do
