@@ -9,13 +9,10 @@ module Enumerable
 
   def my_each_with_index
     return to_enum unless block_given?
-
-    i = 0
-    for x in self
-      yield(x, i)
-      i += 1
-    end
+      size.times { |i| yield(to_a[i], i) }
+      self
   end
+  
 
   def my_select
     return to_enum unless block_given?
@@ -194,7 +191,10 @@ end
 # p([nil, 2.5, 'hi', -7, true].my_each { |el| el })
 # puts
 # p 'My_each_with_index:'
-# [nil, 2.5, 'hi', -7, true].my_each_with_index { |el, i| p("Element: #{el}, Index: #{i}") }
+ p [nil, 2.5, 'hi', -7, true].my_each_with_index.to_a
+ p [nil, 2.5, 'hi', -7, true].each_with_index.to_a
+
+
 # puts
 # p 'My_select method:'
 # [1, 2, 3, 4, 5, 6].my_select { |n| n > 3 }
