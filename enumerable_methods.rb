@@ -232,13 +232,13 @@ puts 'My_count method:'
 puts 'Using argument:'
 puts [1, 2, 4, 23, 34, 143, 143, 143].my_count(143)
 puts 'Using block:'
-puts [1, 2, 4, 23, 34, 143, 143, 143].my_count { |n| n > 20 }
+puts([1, 2, 4, 23, 34, 143, 143, 143].my_count { |n| n > 20 })
 puts 'Without argument nor block:'
 puts [1, 2, 4, 23, 34, 143, 143, 143].my_count
 puts
 puts 'My_map method:'
 puts 'Using block:'
-puts [1, 2, 3, 22, 5].my_map { |x| x * 5 }
+puts([1, 2, 3, 22, 5].my_map { |x| x * 5 })
 puts 'Using proc:'
 proc1 = proc { |x| x**2 }
 puts [1, 2, 3, 22, 5].my_map(&proc1)
