@@ -44,8 +44,8 @@ describe Enumerable do
     it 'returns Enumerator if no block is given' do
       expect(arr_i.my_select).to be_an Enumerator
     end
-    it 'Does not return the same result if .select presents a different argument' do
-      expect(range.my_select { |n| n > 3 }).to eql(range.select { |n| n < 10 })
+    it 'Since 8, 9, 10 are within our range, it is expected for it not to be empty' do
+      expect(range.my_select { |n| n > 7 }).not_to be_empty
     end
   end
 
@@ -57,7 +57,7 @@ describe Enumerable do
       expect(arr_s.my_all?('ant')).to eql(arr_s.all?('ant'))
     end
     it 'Does not return the same result if .all? presents a different argument' do
-      expect(arr_s.my_all? { |word| word.length >= 2 }).to eql(arr_s.all? { |word| word == 'sharks' })
+      expect(arr_s.my_all? { |word| word.length >= 2 }).not_to eql(arr_s.all? { |word| word == 'sharks' })
     end
   end
 
@@ -69,7 +69,7 @@ describe Enumerable do
       expect(arr_s.my_any?('ant')).to eql(arr_s.any?('ant'))
     end
     it 'Does not return the same result if .all? presents a different argument' do
-      expect(arr_s.my_all? { |word| word.length >= 2 }).to eql(arr_s.all? { |word| word == 'sharks' })
+      expect(arr_s.my_all? { |word| word.length >= 2 }).not_to eql(arr_s.all? { |word| word == 'sharks' })
     end
   end
   describe ' #my_none?' do
@@ -79,8 +79,8 @@ describe Enumerable do
     it 'returns the elements of an array if none of them pass a condition when no block is given' do
       expect(arr_s.my_none?('ant')).to eql(arr_s.none?('ant'))
     end
-    it 'Does not return the same result if .none? presents a different argument' do
-      expect(arr_s.my_all? { |word| word.length >= 2 }).to eql(arr_s.all? { |word| word == 'sharks' })
+    it 'Expected to not be true when the condition passes in all elements' do
+      expect(arr_s.my_none? { |word| word.length >= 2 }).not_to be true
     end
   end
   describe ' #my_count' do
@@ -93,6 +93,9 @@ describe Enumerable do
     it 'returns the number of times a certain element appears in an array' do
       expect(arr_i.my_count { |n| n > 4 }).to eql(arr_i.count { |n| n > 4 })
     end
+    it 'Expects the result to be an Integer, not a String' do
+      expect(arr_i.my_count { |n| n > 4 }).not_to be_an String
+    end
   end
 
   describe ' #my_map' do
@@ -102,8 +105,8 @@ describe Enumerable do
     it 'returns the range with its elements modified when a proc is given' do
       expect(range.my_map(&proc_case)).to eql(range.map(&proc_case))
     end
-    it 'Does not return the same result if .map presents a different argument' do
-      expect(arr_i.my_map { |x| x * 5 }).to eql(arr_i.map { |x| x / 2 })
+    it 'Expects to not include a negative random number when array is elevated to 3' do
+      expect(arr_i.my_map { |x| x ** 2 }).not_to include(-100*rand())
     end
   end
   describe ' #my_inject' do
@@ -119,8 +122,8 @@ describe Enumerable do
     it 'Combines all elements o a range by applying a binary operation, using a symbol and an argument as conditions' do
       expect(range.my_inject(5, :-)).to eql(range.inject(5, :-))
     end
-    it 'Does not return the same result if .inject presents a different symbol' do
-      expect(range.my_inject(5, :-)).to eql(range.inject(5, :*))
+    it 'Expected for the result when the argument is 5 and \'-\' symbol to be -49, not 100' do
+      expect(range.my_inject(5, :-)).not_to be 100
     end
   end
   describe '#multiply_els' do
