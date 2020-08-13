@@ -106,7 +106,7 @@ describe Enumerable do
       expect(range.my_map(&proc_case)).to eql(range.map(&proc_case))
     end
     it 'Expects to not include a negative random number when array is elevated to 3' do
-      expect(arr_i.my_map { |x| x ** 2 }).not_to include(-100*rand())
+      expect(arr_i.my_map { |x| x**2 }).not_to include(-100 * rand)
     end
   end
   describe ' #my_inject' do
