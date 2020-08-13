@@ -186,76 +186,75 @@ module Enumerable
     arr.my_inject(:*)
   end
 end
-
-p 'My_each method:'
-p([nil, 2.5, 'hi', -7, true].my_each { |el| el })
+puts 'My_each method:'
+puts([nil, 2.5, 'hi', -7, true].my_each { |el| el })
 puts
-p 'My_each_with_index:'
-p [nil, 2.5, 'hi', -7, true].my_each_with_index.to_a
+puts 'My_each_with_index:'
+puts [nil, 2.5, 'hi', -7, true].my_each_with_index.to_a
 puts
-p 'My_select method:'
+puts 'My_select method:'
 [1, 2, 3, 4, 5, 6].my_select { |n| n > 3 }
 puts
-p 'My_all? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_all? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_all?(String))
-p 'Testing cases:'
-p(%w[ant ant ant].my_all?('ant'))
-p(%w[ant ant bear].my_all?('ant'))
-p(%w[bear cat dog].my_all?('ants'))
-p([3, 5, 2].my_all?(Integer))
+puts 'My_all? method:'
+puts 'Using block:'
+puts(%w[ant ant ant].my_all? { |word| word.length >= 2 })
+puts 'Using Class:'
+puts(%w[ant ant ant].my_all?(String))
+puts 'Testing cases:'
+puts(%w[ant ant ant].my_all?('ant'))
+puts(%w[ant ant bear].my_all?('ant'))
+puts(%w[bear cat dog].my_all?('ants'))
+puts([3, 5, 2].my_all?(Integer))
 puts
-p 'My_any? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_any? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_any?(String))
-p 'Testing cases:'
-p(%w[ant ant ant].my_any?('ant'))
-p(%w[ant ant bear].my_any?('ant'))
-p(%w[bear cat dog].my_any?('ants'))
+puts 'My_any? method:'
+puts 'Using block:'
+puts(%w[ant ant ant].my_any? { |word| word.length >= 2 })
+puts 'Using Class:'
+puts(%w[ant ant ant].my_any?(String))
+puts 'Testing cases:'
+puts(%w[ant ant ant].my_any?('ant'))
+puts(%w[ant ant bear].my_any?('ant'))
+puts(%w[bear cat dog].my_any?('ants'))
 
 puts
-p 'My_none? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_none? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_none?(Integer))
-p 'Testing cases:'
-p(%w[ant ant ant].my_none?('ant'))
-p(%w[ant ant bear].my_none?('ant'))
-p(%w[bear cat dog].my_none?('ants'))
-p([3, 5, 2].my_none?(Integer))
+puts 'My_none? method:'
+puts 'Using block:'
+puts(%w[ant ant ant].my_none? { |word| word.length >= 2 })
+puts 'Using Class:'
+puts %w[ant ant ant].my_none?(Integer)
+puts 'Testing cases:'
+puts %w[ant ant ant].my_none?('ant')
+puts %w[ant ant bear].my_none?('ant')
+puts %w[bear cat dog].my_none?('ants')
+puts [3, 5, 2].my_none?(Integer)
 puts
-p 'My_count method:'
-p 'Using argument:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count(143))
-p 'Using block:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count { |n| n > 20 })
-p 'Without argument nor block:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count)
+puts 'My_count method:'
+puts 'Using argument:'
+puts [1, 2, 4, 23, 34, 143, 143, 143].my_count(143)
+puts 'Using block:'
+puts [1, 2, 4, 23, 34, 143, 143, 143].my_count { |n| n > 20 }
+puts 'Without argument nor block:'
+puts [1, 2, 4, 23, 34, 143, 143, 143].my_count
 puts
-p 'My_map method:'
-p 'Using block:'
-p([1, 2, 3, 22, 5].my_map { |x| x * 5 })
-p 'Using proc:'
+puts 'My_map method:'
+puts 'Using block:'
+puts [1, 2, 3, 22, 5].my_map { |x| x * 5 }
+puts 'Using proc:'
 proc1 = proc { |x| x**2 }
-p [1, 2, 3, 22, 5].my_map(&proc1)
+puts [1, 2, 3, 22, 5].my_map(&proc1)
 puts
-p 'My_inject method:'
-p 'Using only argument:'
-p [1, 2, 3, 2, 5].my_inject(5)
-p 'Using block:'
-p 'Using argument and block:'
-p([1, 2, 3, 2, 5].my_inject(5) { |sum, el| sum + el })
-p 'Using string:'
-p [1, 2, 3, 2, 5].my_inject('+')
-p 'Using symbol:'
-p [1, 2, 3, 2, 5].my_inject(:-)
-p 'Using argument and symbol:'
-p [1, 2, 3, 2, 5].my_inject(5, :-)
+puts 'My_inject method:'
+puts 'Using only argument:'
+puts [1, 2, 3, 2, 5].my_inject(5)
+puts 'Using block:'
+puts 'Using argument and block:'
+puts([1, 2, 3, 2, 5].my_inject(5) { |sum, el| sum + el })
+puts 'Using string:'
+puts [1, 2, 3, 2, 5].my_inject('+')
+puts 'Using symbol:'
+puts [1, 2, 3, 2, 5].my_inject(:-)
+puts 'Using argument and symbol:'
+puts [1, 2, 3, 2, 5].my_inject(5, :-)
 puts
-p 'Multiply_els method:'
-p [].multiply_els([2, 4, 5])
+puts 'Multiply_els method:'
+puts [].multiply_els([2, 4, 5])

@@ -1,5 +1,5 @@
 # spec/calculator_spec.rb
-require './enumerable_methods.rb'
+require_relative '../enumerable_methods.rb'
 
 describe Enumerable do
   let(:test) { Array.new([nil, 2.5, 'hi', -7, true]) }
