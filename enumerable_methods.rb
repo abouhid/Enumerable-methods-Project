@@ -8,13 +8,10 @@ module Enumerable
   end
 
   def my_each_with_index
-    return to_enum unless block_given?
+    return enum_for(__callee__) unless block_given?
 
-    i = 0
-    for x in self
-      yield(x, i)
-      i += 1
-    end
+    size.times { |i| yield(to_a[i], i) }
+    self
   end
 
   def my_select
@@ -24,7 +21,7 @@ module Enumerable
     my_each do |el|
       arr << el if yield(el) == true
     end
-    p arr
+    arr
   end
 
   def my_all?(*arg)
@@ -189,76 +186,3 @@ module Enumerable
     arr.my_inject(:*)
   end
 end
-
-p 'My_each method:'
-p([nil, 2.5, 'hi', -7, true].my_each { |el| el })
-puts
-p 'My_each_with_index:'
-[nil, 2.5, 'hi', -7, true].my_each_with_index { |el, i| p("Element: #{el}, Index: #{i}") }
-puts
-p 'My_select method:'
-[1, 2, 3, 4, 5, 6].my_select { |n| n > 3 }
-puts
-p 'My_all? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_all? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_all?(String))
-p 'Testing cases:'
-p(%w[ant ant ant].my_all?('ant'))
-p(%w[ant ant bear].my_all?('ant'))
-p(%w[bear cat dog].my_all?('ants'))
-p([3, 5, 2].my_all?(Integer))
-puts
-p 'My_any? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_any? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_any?(String))
-p 'Testing cases:'
-p(%w[ant ant ant].my_any?('ant'))
-p(%w[ant ant bear].my_any?('ant'))
-p(%w[bear cat dog].my_any?('ants'))
-
-puts
-p 'My_none? method:'
-p 'Using block:'
-p(%w[ant ant ant].my_none? { |word| word.length >= 2 })
-p 'Using Class:'
-p(%w[ant ant ant].my_none?(Integer))
-p 'Testing cases:'
-p(%w[ant ant ant].my_none?('ant'))
-p(%w[ant ant bear].my_none?('ant'))
-p(%w[bear cat dog].my_none?('ants'))
-p([3, 5, 2].my_none?(Integer))
-puts
-p 'My_count method:'
-p 'Using argument:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count(143))
-p 'Using block:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count { |n| n > 20 })
-p 'Without argument nor block:'
-p([1, 2, 4, 23, 34, 143, 143, 143].my_count)
-puts
-p 'My_map method:'
-p 'Using block:'
-p([1, 2, 3, 22, 5].my_map { |x| x * 5 })
-p 'Using proc:'
-proc1 = proc { |x| x**2 }
-p [1, 2, 3, 22, 5].my_map(&proc1)
-puts
-p 'My_inject method:'
-p 'Using only argument:'
-p [1, 2, 3, 2, 5].my_inject(5)
-p 'Using block:'
-p 'Using argument and block:'
-p([1, 2, 3, 2, 5].my_inject(5) { |sum, el| sum + el })
-p 'Using string:'
-p [1, 2, 3, 2, 5].my_inject('+')
-p 'Using symbol:'
-p [1, 2, 3, 2, 5].my_inject(:-)
-p 'Using argument and symbol:'
-p [1, 2, 3, 2, 5].my_inject(5, :-)
-puts
-p 'Multiply_els method:'
-p [].multiply_els([2, 4, 5])
